@@ -99,15 +99,6 @@ await fetch(`https://api.openai.com/v1/threads/${thread.id}/runs`, {
 // Return the thread ID and status
 return NextResponse.json({ threadId: thread.id, status: "run started" });
 
-    // list models
-    if (subpath === OpenaiPath.ListModelPath && response.status === 200) {
-      const resJson = (await response.json()) as OpenAIListModelResponse;
-      const availableModels = getModels(resJson);
-      return NextResponse.json(availableModels, {
-        status: response.status,
-      });
-    }
-
     return response;
   } catch (e) {
     console.error("[OpenAI] ", e);
