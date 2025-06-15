@@ -59,7 +59,45 @@ export async function handle(
   }
 
   try {
-    const response = await requestOpenai(req);
+   const assistantId = process.env.OPENAI_ASSISTANT_ID;
+
+const body = await req.json();
+
+const threadRes = await fetch("https://api.openai.com/v1/threads", {
+  method: "POST",
+  headers: {
+    "Content-Type": "application/json",
+    Authorization: `Bearer ${process.env.OPENAI_API_KEY}`,
+  },
+});
+
+const thread = await threadRes.json();
+
+const messageRes = await fetch(`https://api.openai.com/v1/threads/${thread.id}/messages`, {
+  method: "POST",
+  headers: {
+    "Content-Type": "application/json",
+    Authorization: `Bearer ${process.env.OPENAI_API_KEY}`,
+  },
+  body: JSON.stringify({
+    role: "user",
+    content: body.prompt || "Hi",
+  }),
+});
+
+await fetch(`https://api.openai.com/v1/threads/${thread.id}/runs`, {
+  method: "POST",
+  headers: {
+    "Content-Type": "application/json",
+    Authorization: `Bearer ${process.env.OPENAI_API_KEY}`,
+  },
+  body: JSON.stringify({
+    assistant_id: assistantId,
+  }),
+});
+
+// Return the thread ID and status
+return NextResponse.json({ threadId: thread.id, status: "run started" });
 
     // list models
     if (subpath === OpenaiPath.ListModelPath && response.status === 200) {
