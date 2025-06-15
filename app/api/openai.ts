@@ -58,49 +58,47 @@ export async function handle(
     });
   }
 
-  try {
-   const assistantId = process.env.OPENAI_ASSISTANT_ID;
+try {
+  const assistantId = process.env.OPENAI_ASSISTANT_ID;
+  const body = await req.json();
 
-const body = await req.json();
+  const threadRes = await fetch("https://api.openai.com/v1/threads", {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: `Bearer ${process.env.OPENAI_API_KEY}`,
+    },
+  });
 
-const threadRes = await fetch("https://api.openai.com/v1/threads", {
-  method: "POST",
-  headers: {
-    "Content-Type": "application/json",
-    Authorization: `Bearer ${process.env.OPENAI_API_KEY}`,
-  },
-});
+  const thread = await threadRes.json();
 
-const thread = await threadRes.json();
+  const messageRes = await fetch(`https://api.openai.com/v1/threads/${thread.id}/messages`, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: `Bearer ${process.env.OPENAI_API_KEY}`,
+    },
+    body: JSON.stringify({
+      role: "user",
+      content: body.prompt || "Hi",
+    }),
+  });
 
-const messageRes = await fetch(`https://api.openai.com/v1/threads/${thread.id}/messages`, {
-  method: "POST",
-  headers: {
-    "Content-Type": "application/json",
-    Authorization: `Bearer ${process.env.OPENAI_API_KEY}`,
-  },
-  body: JSON.stringify({
-    role: "user",
-    content: body.prompt || "Hi",
-  }),
-});
+  await fetch(`https://api.openai.com/v1/threads/${thread.id}/runs`, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: `Bearer ${process.env.OPENAI_API_KEY}`,
+    },
+    body: JSON.stringify({
+      assistant_id: assistantId,
+    }),
+  });
 
-await fetch(`https://api.openai.com/v1/threads/${thread.id}/runs`, {
-  method: "POST",
-  headers: {
-    "Content-Type": "application/json",
-    Authorization: `Bearer ${process.env.OPENAI_API_KEY}`,
-  },
-  body: JSON.stringify({
-    assistant_id: assistantId,
-  }),
-});
+  return NextResponse.json({ threadId: thread.id, status: "run started" });
 
-// Return the thread ID and status
-return NextResponse.json({ threadId: thread.id, status: "run started" });
-
-  } catch (e) {
-    console.error("[OpenAI] ", e);
-    return NextResponse.json(prettyObject(e));
-  }
+} catch (e) {
+  console.error("[OpenAI] ", e);
+  return NextResponse.json(prettyObject(e));
 }
+
