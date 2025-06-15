@@ -99,7 +99,6 @@ await fetch(`https://api.openai.com/v1/threads/${thread.id}/runs`, {
 // Return the thread ID and status
 return NextResponse.json({ threadId: thread.id, status: "run started" });
 
-    return response;
   } catch (e) {
     console.error("[OpenAI] ", e);
     return NextResponse.json(prettyObject(e));
