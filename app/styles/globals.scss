@@ -75,6 +75,14 @@ input {
   color: var(--theme-color) !important;
 }
 
+/* === Hide Unused Icons and Settings === */
+.settings-button,
+button.settings,
+.prompt-toolbar .icon:nth-child(2), /* example unused icon */
+.prompt-toolbar .icon:nth-child(4)  /* another unused icon */ {
+  display: none !important;
+}
+
 /* === Misc Cleanup === */
 button:focus,
 input:focus,
