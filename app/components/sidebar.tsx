@@ -244,17 +244,27 @@ export function SideBar(props: { className?: string }) {
   }, []);
 
   return (
-    <SideBarContainer
-      onDragStart={onDragStart}
-      shouldNarrow={shouldNarrow}
-      {...props}
-    >
-      <SideBarHeader
-        title="NextChat"
-        subTitle="Build your own AI assistant."
-        logo={<ChatGptIcon />}
-        shouldNarrow={shouldNarrow}
-      >
+<SideBarContainer
+  onDragStart={onDragStart}
+  shouldNarrow={shouldNarrow}
+  {...props}
+>
+<SideBarHeader
+  title="AI Workforce Assistant For Nonprofits"
+  subTitle="Demo our AI assistant."
+  logo={
+    <img
+      src="/gemstone-logo.png"
+      alt="Gemstone Logo"
+      style={{
+        height: "30px",
+        marginRight: "0.5rem",
+        verticalAlign: "middle",
+      }}
+    />
+  }
+  shouldNarrow={shouldNarrow}
+>
         <div className={styles["sidebar-header-bar"]}>
           <IconButton
             icon={<MaskIcon />}
