@@ -11,39 +11,39 @@
 body {
   margin: 0;
   font-family: 'Noto Sans', sans-serif;
-  background-color: var(--background-color);
-  color: var(--font-color);
+  background-color: #f5f5f5;
+  color: #000;
 }
 
 /* === Sidebar Branding === */
 .sidebar {
   background-color: var(--sidebar-bg-color) !important;
   color: var(--sidebar-font-color) !important;
+}
 
-  .sidebar-title,
-  .sidebar-sub-title,
-  .sidebar-action,
-  .sidebar-header-bar button,
-  .sidebar-body,
-  .sidebar-tail,
-  .sidebar-logo {
-    color: var(--sidebar-font-color) !important;
-    fill: var(--sidebar-font-color) !important;
-  }
+.sidebar .sidebar-title,
+.sidebar .sidebar-sub-title,
+.sidebar .sidebar-action,
+.sidebar .sidebar-header-bar button,
+.sidebar .sidebar-body,
+.sidebar .sidebar-tail,
+.sidebar .sidebar-logo {
+  color: var(--sidebar-font-color) !important;
+  fill: var(--sidebar-font-color) !important;
+}
 
-  button {
-    background-color: #111 !important;
-    color: #fff !important;
-    border-color: #444 !important;
-  }
+.sidebar button {
+  background-color: #111 !important;
+  color: #fff !important;
+  border-color: #444 !important;
+}
 
-  a {
-    color: #fff !important;
-  }
+.sidebar a {
+  color: #fff !important;
+}
 
-  svg {
-    fill: #fff !important;
-  }
+.sidebar svg {
+  fill: #fff !important;
 }
 
 /* === Send Button Branding === */
@@ -71,15 +71,10 @@ input {
   box-sizing: border-box;
 }
 
-/* === Custom Center Banner Message === */
-.chat-message.welcome::before {
-  content: "Ask me how digital literacy increases job opportunities!";
-  display: block;
-  font-size: 1.25rem;
-  font-weight: bold;
-  text-align: center;
-  color: #000;
-  margin: 2rem 0;
+textarea:focus,
+input:focus {
+  outline: none !important;
+  box-shadow: 0 0 0 1px #ccc;
 }
 
 /* === Prompt Toolbar & Icons === */
@@ -92,6 +87,7 @@ input {
 /* === Hide Unused Icons and Settings === */
 .settings-button,
 button.settings,
+button[aria-label="Settings"],
 .prompt-toolbar .icon:nth-child(2),
 .prompt-toolbar .icon:nth-child(4),
 .prompt-toolbar .icon:nth-child(5),
@@ -100,18 +96,23 @@ button.settings,
   display: none !important;
 }
 
-/* === Misc Cleanup === */
-button:focus,
-input:focus,
-textarea:focus {
-  outline: 2px solid var(--theme-color);
+/* === Overlay Message === */
+#app .window-content::before {
+  content: "Ask me how digital literacy increases job opportunities!";
+  display: block;
+  text-align: center;
+  font-weight: bold;
+  font-size: 1.25rem;
+  margin: 2rem auto;
+  color: #000;
+}
+
+/* === Link Selection === */
+::selection {
+  background: var(--theme-color);
+  color: #fff;
 }
 
 a {
   color: var(--theme-color);
-}
-
-::selection {
-  background: var(--theme-color);
-  color: #fff;
 }
