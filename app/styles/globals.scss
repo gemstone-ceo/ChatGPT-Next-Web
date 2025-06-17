@@ -1,50 +1,61 @@
-/* ===== Custom White-Label Styling for Gemstone GPT ===== */
+/* ===== Custom White-Label Styling for Embedded Gemstone GPT ===== */
 
-/* Sidebar Background and Text */
+/* Sidebar Styling */
 .sidebar {
-  background-color: #000 !important; // Black background
-  color: #fff !important; // White text
-
-  a, span, p, h1, h2, h3, h4, div {
-    color: #fff !important;
-  }
-
-  svg {
-    fill: #fff !important;
-  }
-
-  .sidebar-logo img {
-    filter: brightness(0) invert(1); // Ensure logo looks good on dark background
-  }
-
-  .sidebar-sub-title {
-    color: #ccc !important; // Light gray subtitle
-  }
-
-  .sidebar-action {
-    border-top: 1px solid #333;
-  }
+  background-color: #ffffff !important; /* White background to blend with your site */
+  color: #000 !important; /* Black text */
+  border-right: none;
+  box-shadow: none;
 }
 
-/* Chat Send Button */
-button {
-  background-color: #28a745 !important; // Green (Gemstone's CTA)
+/* Hide Sidebar Logo */
+.sidebar-logo {
+  display: none !important;
+}
+
+/* Buttons (like New Chat, Mask, Discovery) */
+.sidebar button,
+.sidebar .sidebar-action button {
+  background-color: #28a745 !important; /* Gemstone green */
   color: white !important;
   border: none;
-
-  &:hover {
-    background-color: #218838 !important;
-  }
-}
-
-/* Chat Input Area */
-.chat-input {
-  background-color: #fff !important;
-  border: 1px solid #ccc;
   border-radius: 6px;
+  padding: 8px 12px;
+  font-weight: 600;
 }
 
-/* Page Background (Optional) */
-body {
-  background-color: #f9f9f9;
+.sidebar .sidebar-sub-title {
+  color: #333 !important;
+}
+
+/* Main Chat Window */
+.window-content {
+  background-color: #ffffff !important; /* Match your site background */
+  color: #000 !important;
+}
+
+/* Send Button Styling */
+button {
+  background-color: #28a745 !important; /* Green send button */
+  color: white !important;
+  border: none !important;
+  border-radius: 6px;
+  padding: 8px 14px;
+  font-weight: 600;
+}
+
+button:hover {
+  background-color: #218838 !important; /* Slightly darker green */
+}
+
+/* Hide Settings Icon */
+.sidebar .sidebar-tail .sidebar-action a[href*="settings"],
+.sidebar .sidebar-tail .sidebar-action a[href*="/settings"],
+.sidebar .sidebar-tail .sidebar-action .sidebar-bar-button {
+  display: none !important;
+}
+
+/* Optionally remove GitHub icon too */
+.sidebar .sidebar-tail .sidebar-action a[href*="github"] {
+  display: none !important;
 }
