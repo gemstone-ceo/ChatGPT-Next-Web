@@ -4,15 +4,11 @@ import { getServerSideConfig } from "./config/server";
 
 const serverConfig = getServerSideConfig();
 
-export default async function App() {
+export default function Page() {
   return (
     <>
       <Home />
-      {serverConfig?.isVercel && (
-        <>
-          <Analytics />
-        </>
-      )}
+      {serverConfig?.isVercel && <Analytics />}
     </>
   );
 }
