@@ -1,61 +1,92 @@
-/* ===== Custom White-Label Styling for Embedded Gemstone GPT ===== */
+/* === Reset and Base Styles === */
+:root {
+  --theme-color: #28a745;
+  --font-color: #000;
+  --background-color: #fff;
+  --sidebar-bg-color: #000;
+  --sidebar-font-color: #fff;
+}
 
-/* Sidebar Styling */
+body {
+  margin: 0;
+  font-family: 'Noto Sans', sans-serif;
+  background-color: var(--background-color);
+  color: var(--font-color);
+}
+
+/* === Sidebar Branding === */
 .sidebar {
-  background-color: #ffffff !important; /* White background to blend with your site */
-  color: #000 !important; /* Black text */
-  border-right: none;
-  box-shadow: none;
+  background-color: var(--sidebar-bg-color) !important;
+  color: var(--sidebar-font-color) !important;
+
+  .sidebar-title,
+  .sidebar-sub-title,
+  .sidebar-action,
+  .sidebar-header-bar button,
+  .sidebar-body,
+  .sidebar-tail,
+  .sidebar-logo {
+    color: var(--sidebar-font-color) !important;
+    fill: var(--sidebar-font-color) !important;
+  }
+
+  button {
+    background-color: #222 !important;
+    color: #fff !important;
+    border-color: #444 !important;
+  }
+
+  a {
+    color: #fff !important;
+  }
+
+  svg {
+    fill: #fff !important;
+  }
 }
 
-/* Hide Sidebar Logo */
-.sidebar-logo {
-  display: none !important;
-}
-
-/* Buttons (like New Chat, Mask, Discovery) */
-.sidebar button,
-.sidebar .sidebar-action button {
-  background-color: #28a745 !important; /* Gemstone green */
-  color: white !important;
-  border: none;
-  border-radius: 6px;
-  padding: 8px 12px;
-  font-weight: 600;
-}
-
-.sidebar .sidebar-sub-title {
-  color: #333 !important;
-}
-
-/* Main Chat Window */
-.window-content {
-  background-color: #ffffff !important; /* Match your site background */
-  color: #000 !important;
-}
-
-/* Send Button Styling */
+/* === Send Button Branding === */
 button {
-  background-color: #28a745 !important; /* Green send button */
-  color: white !important;
-  border: none !important;
-  border-radius: 6px;
-  padding: 8px 14px;
-  font-weight: 600;
+  &.send-button,
+  &[data-testid="send-button"] {
+    background-color: var(--theme-color) !important;
+    color: #fff !important;
+    border: none;
+  }
 }
 
-button:hover {
-  background-color: #218838 !important; /* Slightly darker green */
+/* === Chat Input Box === */
+textarea,
+input {
+  font-family: inherit;
+  font-size: 1rem;
+  color: #333;
+  border: 1px solid #ccc;
+  padding: 0.5rem;
+  width: 100%;
+  box-sizing: border-box;
+  border-radius: 4px;
 }
 
-/* Hide Settings Icon */
-.sidebar .sidebar-tail .sidebar-action a[href*="settings"],
-.sidebar .sidebar-tail .sidebar-action a[href*="/settings"],
-.sidebar .sidebar-tail .sidebar-action .sidebar-bar-button {
-  display: none !important;
+/* === Prompt Toolbar & Icons === */
+.prompt-toolbar,
+.prompt-toolbar svg {
+  fill: var(--theme-color) !important;
+  color: var(--theme-color) !important;
 }
 
-/* Optionally remove GitHub icon too */
-.sidebar .sidebar-tail .sidebar-action a[href*="github"] {
-  display: none !important;
+/* === Misc Cleanup === */
+button:focus,
+input:focus,
+textarea:focus {
+  outline: 2px solid var(--theme-color);
+}
+
+a {
+  color: var(--theme-color);
+}
+
+::selection {
+  background: var(--theme-color);
+  color: #fff;
 }
