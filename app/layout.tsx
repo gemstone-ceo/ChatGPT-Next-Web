@@ -10,7 +10,7 @@ import { getServerSideConfig } from "./config/server";
 
 export const metadata: Metadata = {
   title: "AI Workforce Assistant",
-  description: "A GPT-powered assistant by developed by Gemstone Consulting Services",
+  description: "A GPT-powered assistant developed by Gemstone Consulting Services",
   appleWebApp: {
     title: "AI Workforce Assistant",
     statusBarStyle: "default",
