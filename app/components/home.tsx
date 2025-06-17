@@ -40,54 +40,22 @@ export function Loading(props: { noLogo?: boolean }) {
   );
 }
 
-const Artifacts = dynamic(async () => (await import("./artifacts")).Artifacts, {
-  loading: () => <Loading noLogo />,
-});
-
-const Settings = dynamic(async () => (await import("./settings")).Settings, {
-  loading: () => <Loading noLogo />,
-});
-
-const Chat = dynamic(async () => (await import("./chat")).Chat, {
-  loading: () => <Loading noLogo />,
-});
-
-const NewChat = dynamic(async () => (await import("./new-chat")).NewChat, {
-  loading: () => <Loading noLogo />,
-});
-
-const MaskPage = dynamic(async () => (await import("./mask")).MaskPage, {
-  loading: () => <Loading noLogo />,
-});
-
-const PluginPage = dynamic(async () => (await import("./plugin")).PluginPage, {
-  loading: () => <Loading noLogo />,
-});
-
-const SearchChat = dynamic(
-  async () => (await import("./search-chat")).SearchChatPage,
-  {
-    loading: () => <Loading noLogo />,
-  },
-);
-
-const Sd = dynamic(async () => (await import("./sd")).Sd, {
-  loading: () => <Loading noLogo />,
-});
-
-const McpMarketPage = dynamic(
-  async () => (await import("./mcp-market")).McpMarketPage,
-  {
-    loading: () => <Loading noLogo />,
-  },
-);
+// Dynamic imports
+const Artifacts = dynamic(() => import("./artifacts").then(m => m.Artifacts), { loading: () => <Loading noLogo /> });
+const Settings = dynamic(() => import("./settings").then(m => m.Settings), { loading: () => <Loading noLogo /> });
+const Chat = dynamic(() => import("./chat").then(m => m.Chat), { loading: () => <Loading noLogo /> });
+const NewChat = dynamic(() => import("./new-chat").then(m => m.NewChat), { loading: () => <Loading noLogo /> });
+const MaskPage = dynamic(() => import("./mask").then(m => m.MaskPage), { loading: () => <Loading noLogo /> });
+const PluginPage = dynamic(() => import("./plugin").then(m => m.PluginPage), { loading: () => <Loading noLogo /> });
+const SearchChat = dynamic(() => import("./search-chat").then(m => m.SearchChatPage), { loading: () => <Loading noLogo /> });
+const Sd = dynamic(() => import("./sd").then(m => m.Sd), { loading: () => <Loading noLogo /> });
+const McpMarketPage = dynamic(() => import("./mcp-market").then(m => m.McpMarketPage), { loading: () => <Loading noLogo /> });
 
 export function useSwitchTheme() {
   const config = useAppConfig();
 
   useEffect(() => {
-    document.body.classList.remove("light");
-    document.body.classList.remove("dark");
+    document.body.classList.remove("light", "dark");
 
     if (config.theme === "dark") {
       document.body.classList.add("dark");
@@ -95,18 +63,15 @@ export function useSwitchTheme() {
       document.body.classList.add("light");
     }
 
-    const metaDescriptionDark = document.querySelector(
-      'meta[name="theme-color"][media*="dark"]',
-    );
-    const metaDescriptionLight = document.querySelector(
-      'meta[name="theme-color"][media*="light"]',
-    );
+    const metaDescriptionDark = document.querySelector('meta[name="theme-color"][media*="dark"]');
+    const metaDescriptionLight = document.querySelector('meta[name="theme-color"][media*="light"]');
+
+    const themeColor = getCSSVar("--theme-color");
 
     if (config.theme === "auto") {
       metaDescriptionDark?.setAttribute("content", "#151515");
       metaDescriptionLight?.setAttribute("content", "#fafafa");
     } else {
-      const themeColor = getCSSVar("--theme-color");
       metaDescriptionDark?.setAttribute("content", themeColor);
       metaDescriptionLight?.setAttribute("content", themeColor);
     }
@@ -116,43 +81,32 @@ export function useSwitchTheme() {
 function useHtmlLang() {
   useEffect(() => {
     const lang = getISOLang();
-    const htmlLang = document.documentElement.lang;
-
-    if (lang !== htmlLang) {
+    if (document.documentElement.lang !== lang) {
       document.documentElement.lang = lang;
     }
   }, []);
 }
 
-const useHasHydrated = () => {
-  const [hasHydrated, setHasHydrated] = useState<boolean>(false);
-
-  useEffect(() => {
-    setHasHydrated(true);
-  }, []);
-
+function useHasHydrated() {
+  const [hasHydrated, setHasHydrated] = useState(false);
+  useEffect(() => setHasHydrated(true), []);
   return hasHydrated;
-};
+}
 
-const loadAsyncGoogleFont = () => {
+function loadAsyncGoogleFont() {
   const linkEl = document.createElement("link");
   const proxyFontUrl = "/google-fonts";
   const remoteFontUrl = "https://fonts.googleapis.com";
-  const googleFontUrl =
-    getClientConfig()?.buildMode === "export" ? remoteFontUrl : proxyFontUrl;
+  const googleFontUrl = getClientConfig()?.buildMode === "export" ? remoteFontUrl : proxyFontUrl;
   linkEl.rel = "stylesheet";
-  linkEl.href =
-    googleFontUrl +
-    "/css2?family=" +
-    encodeURIComponent("Noto Sans:wght@300;400;700;900") +
-    "&display=swap";
+  linkEl.href = `${googleFontUrl}/css2?family=${encodeURIComponent("Noto Sans:wght@300;400;700;900")}&display=swap`;
   document.head.appendChild(linkEl);
-};
+}
 
 export function WindowContent(props: { children: React.ReactNode }) {
   return (
     <div className={styles["window-content"]} id={SlotID.AppBody}>
-      {props?.children}
+      {props.children}
     </div>
   );
 }
@@ -165,10 +119,8 @@ function Screen() {
   const isAuth = location.pathname === Path.Auth;
   const isSd = location.pathname === Path.Sd;
   const isSdNew = location.pathname === Path.SdNew;
-
   const isMobileScreen = useMobileScreen();
-  const shouldTightBorder =
-    getClientConfig()?.isApp || (config.tightBorder && !isMobileScreen);
+  const shouldTightBorder = getClientConfig()?.isApp || (config.tightBorder && !isMobileScreen);
 
   useEffect(() => {
     loadAsyncGoogleFont();
@@ -181,20 +133,16 @@ function Screen() {
       </Routes>
     );
   }
+
   const renderContent = () => {
     if (isAuth) return <AuthPage />;
-    if (isSd) return <Sd />;
-    if (isSdNew) return <Sd />;
+    if (isSd || isSdNew) return <Sd />;
     return (
       <>
-        <SideBar
-          className={clsx({
-            [styles["sidebar-show"]]: isHome,
-          })}
-        />
+        <SideBar className={clsx({ [styles["sidebar-show"]]: isHome })} />
         <WindowContent>
           <Routes>
-            <Route path={Path.Home} element={<Chat />} />
+            <Route path={Path.Home} element={<HomeContent />} />
             <Route path={Path.NewChat} element={<NewChat />} />
             <Route path={Path.Masks} element={<MaskPage />} />
             <Route path={Path.Plugins} element={<PluginPage />} />
@@ -209,12 +157,10 @@ function Screen() {
   };
 
   return (
-    <div
-      className={clsx(styles.container, {
-        [styles["tight-container"]]: shouldTightBorder,
-        [styles["rtl-screen"]]: getLang() === "ar",
-      })}
-    >
+    <div className={clsx(styles.container, {
+      [styles["tight-container"]]: shouldTightBorder,
+      [styles["rtl-screen"]]: getLang() === "ar",
+    })}>
       {renderContent()}
     </div>
   );
@@ -222,40 +168,29 @@ function Screen() {
 
 export function useLoadData() {
   const config = useAppConfig();
-
   const api: ClientApi = getClientApi(config.modelConfig.providerName);
-
   useEffect(() => {
     (async () => {
       const models = await api.llm.models();
       config.mergeModels(models);
     })();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 }
 
-export function Home() {
-  useSwitchTheme();
-  useLoadData();
-  useHtmlLang();
+export function HomeContent() {
+  return (
+    <main className="home-container">
+      <h1 className="text-3xl font-bold mb-2">AI Workforce Assistant</h1>
+      <p className="text-lg text-gray-600 mb-6">
+        Your nonprofit’s AI-powered resource for workforce training and digital skills.
+      </p>
+    </main>
+  );
+}
 
+export default function AppWrapper() {
   useEffect(() => {
-    console.log("[Config] got config from build time", getClientConfig());
-    useAccessStore.getState().fetch();
-
-    const initMcp = async () => {
-      try {
-        const enabled = await isMcpEnabled();
-        if (enabled) {
-          console.log("[MCP] initializing...");
-          await initializeMcpSystem();
-          console.log("[MCP] initialized");
-        }
-      } catch (err) {
-        console.error("[MCP] failed to initialize:", err);
-      }
-    };
-    initMcp();
+    initializeMcpSystem();
   }, []);
 
   if (!useHasHydrated()) {
