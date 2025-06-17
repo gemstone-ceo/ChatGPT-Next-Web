@@ -1,10 +1,11 @@
 /* === Reset and Base Styles === */
 :root {
   --theme-color: #28a745;
-  --font-color: #000;
+  --font-color: #fff;
   --background-color: #fff;
   --sidebar-bg-color: #000;
   --sidebar-font-color: #fff;
+  --input-bg-color: #e0e0e0;
 }
 
 body {
@@ -31,7 +32,7 @@ body {
   }
 
   button {
-    background-color: #222 !important;
+    background-color: #111 !important;
     color: #fff !important;
     border-color: #444 !important;
   }
@@ -46,13 +47,14 @@ body {
 }
 
 /* === Send Button Branding === */
-button {
-  &.send-button,
-  &[data-testid="send-button"] {
-    background-color: var(--theme-color) !important;
-    color: #fff !important;
-    border: none;
-  }
+button.send-button,
+button[data-testid="send-button"] {
+  background-color: var(--theme-color) !important;
+  color: #fff !important;
+  border: none;
+  border-radius: 20px;
+  padding: 0.75rem 1.5rem;
+  font-size: 1rem;
 }
 
 /* === Chat Input Box === */
@@ -60,12 +62,24 @@ textarea,
 input {
   font-family: inherit;
   font-size: 1rem;
-  color: #333;
-  border: 1px solid #ccc;
-  padding: 0.5rem;
+  color: #000;
+  background-color: var(--input-bg-color);
+  border: none;
+  padding: 1rem;
+  border-radius: 20px;
   width: 100%;
   box-sizing: border-box;
-  border-radius: 4px;
+}
+
+/* === Custom Center Banner Message === */
+.chat-message.welcome::before {
+  content: "Ask me how digital literacy increases job opportunities!";
+  display: block;
+  font-size: 1.25rem;
+  font-weight: bold;
+  text-align: center;
+  color: #000;
+  margin: 2rem 0;
 }
 
 /* === Prompt Toolbar & Icons === */
@@ -78,8 +92,11 @@ input {
 /* === Hide Unused Icons and Settings === */
 .settings-button,
 button.settings,
-.prompt-toolbar .icon:nth-child(2), /* example unused icon */
-.prompt-toolbar .icon:nth-child(4)  /* another unused icon */ {
+.prompt-toolbar .icon:nth-child(2),
+.prompt-toolbar .icon:nth-child(4),
+.prompt-toolbar .icon:nth-child(5),
+.prompt-toolbar .icon:nth-child(6),
+.sidebar-logo {
   display: none !important;
 }
 
