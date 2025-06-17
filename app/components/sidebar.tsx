@@ -252,17 +252,7 @@ export function SideBar(props: { className?: string }) {
 <SideBarHeader
   title="AI Workforce Assistant For Nonprofits"
   subTitle="Demo our AI assistant."
-  logo={
-    <img
-      src="/gemstone-logo.png"
-      alt="Gemstone Logo"
-      style={{
-        height: "30px",
-        marginRight: "0.5rem",
-        verticalAlign: "middle",
-      }}
-    />
-  }
+  
   shouldNarrow={shouldNarrow}
 >
         <div className={styles["sidebar-header-bar"]}>
