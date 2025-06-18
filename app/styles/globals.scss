@@ -1,118 +1,111 @@
-/* === Reset and Base Styles === */
+/* === Root Theme Variables === */
 :root {
-  --theme-color: #28a745;
+  --theme-color: #28a745; /* green for send button */
   --font-color: #fff;
-  --background-color: #fff;
-  --sidebar-bg-color: #000;
-  --sidebar-font-color: #fff;
-  --input-bg-color: #e0e0e0;
+  --background-color: #ffffff;
+  --sidebar-bg-color: #000000; /* black sidebar */
+  --sidebar-font-color: #ffffff; /* white text */
+  --input-bg-color: #ffffff;
 }
 
+/* === Global Reset === */
 body {
   margin: 0;
   font-family: 'Noto Sans', sans-serif;
-  background-color: #f5f5f5;
+  background-color: var(--background-color);
   color: #000;
 }
 
-/* === Sidebar Branding === */
+/* === Sidebar Styling === */
 .sidebar {
   background-color: var(--sidebar-bg-color) !important;
   color: var(--sidebar-font-color) !important;
+  border-right: 2px solid #222;
 }
 
-.sidebar .sidebar-title,
-.sidebar .sidebar-sub-title,
-.sidebar .sidebar-action,
-.sidebar .sidebar-header-bar button,
-.sidebar .sidebar-body,
-.sidebar .sidebar-tail,
-.sidebar .sidebar-logo {
+.sidebar * {
   color: var(--sidebar-font-color) !important;
   fill: var(--sidebar-font-color) !important;
 }
 
-.sidebar button {
-  background-color: #111 !important;
-  color: #fff !important;
-  border-color: #444 !important;
-}
-
-.sidebar a {
-  color: #fff !important;
-}
-
-.sidebar svg {
-  fill: #fff !important;
-}
-
-/* === Send Button Branding === */
-button.send-button,
-button[data-testid="send-button"] {
-  background-color: var(--theme-color) !important;
-  color: #fff !important;
-  border: none;
-  border-radius: 20px;
-  padding: 0.75rem 1.5rem;
-  font-size: 1rem;
-}
-
-/* === Chat Input Box === */
-textarea,
-input {
-  font-family: inherit;
-  font-size: 1rem;
-  color: #000;
-  background-color: var(--input-bg-color);
-  border: none;
+.sidebar .sidebar-title,
+.sidebar .sidebar-sub-title {
+  font-weight: bold;
+  font-size: 1.25rem;
   padding: 1rem;
-  border-radius: 20px;
-  width: 100%;
-  box-sizing: border-box;
+  color: var(--sidebar-font-color) !important;
 }
 
-textarea:focus,
-input:focus {
-  outline: none !important;
-  box-shadow: 0 0 0 1px #ccc;
+.sidebar button,
+.sidebar a {
+  background: none !important;
+  color: var(--sidebar-font-color) !important;
+  border: 1px solid var(--sidebar-font-color) !important;
+  border-radius: 5px;
+  margin: 0.5rem 0.5rem;
 }
 
-/* === Prompt Toolbar & Icons === */
-.prompt-toolbar,
-.prompt-toolbar svg {
-  fill: var(--theme-color) !important;
-  color: var(--theme-color) !important;
-}
-
-/* === Hide Unused Icons and Settings === */
+/* === Hide Settings and Extras === */
 .settings-button,
-button.settings,
 button[aria-label="Settings"],
+button.settings,
+.sidebar-logo,
 .prompt-toolbar .icon:nth-child(2),
 .prompt-toolbar .icon:nth-child(4),
 .prompt-toolbar .icon:nth-child(5),
-.prompt-toolbar .icon:nth-child(6),
-.sidebar-logo {
+.prompt-toolbar .icon:nth-child(6) {
   display: none !important;
 }
 
-/* === Overlay Message === */
+/* === Main Area Prompt Banner === */
 #app .window-content::before {
   content: "Ask me how digital literacy increases job opportunities!";
   display: block;
   text-align: center;
   font-weight: bold;
-  font-size: 1.25rem;
-  margin: 2rem auto;
+  font-size: 1.5rem;
+  margin: 2rem auto 1rem auto;
   color: #000;
 }
 
-/* === Link Selection === */
+/* === Send Button === */
+button.send-button,
+button[data-testid="send-button"] {
+  background-color: var(--theme-color) !important;
+  color: #fff !important;
+  border: none;
+  border-radius: 30px;
+  padding: 0.75rem 1.5rem;
+  font-size: 1rem;
+  cursor: pointer;
+}
+
+/* === Input Box Styling === */
+textarea,
+input {
+  font-family: inherit;
+  font-size: 1rem;
+  background-color: var(--input-bg-color);
+  color: #000;
+  padding: 1rem;
+  border-radius: 20px;
+  border: none;
+  box-shadow: 0 0 0 1px #ccc;
+  width: 100%;
+}
+
+textarea:focus,
+input:focus {
+  outline: none;
+  box-shadow: 0 0 0 2px var(--theme-color);
+}
+
+/* === Miscellaneous === */
+a {
+  color: var(--theme-color);
+}
+
 ::selection {
   background: var(--theme-color);
   color: #fff;
-}
-
-a {
-  color: var(--theme-color);
 }
